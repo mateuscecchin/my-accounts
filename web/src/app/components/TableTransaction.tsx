@@ -9,7 +9,7 @@ export function TableTransaction() {
     const [tableData, setTableData] = useState<IAccounts[]>([]);
 
     async function fetchAccounts() {
-        const data = await fetch(`http://localhost:8081/accounts/${user_id}`, { cache: "no-cache", next: { revalidate: 10 } });
+        const data = await fetch(`http://localhost:8081/accounts/${user_id}`, { cache: "no-cache" });
         const dataParsed = await data.json() as IAccounts[];
         setTableData(dataParsed)
     }

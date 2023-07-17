@@ -1,39 +1,26 @@
-'use client'
-
-import { useAuthStore } from "~/store/auth";
-import { redirect, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useSearchParams } from 'next/navigation'
-
-
+import { ModeToggle } from "~/components/ui/mode-toggle";
+import { DialogTransaction } from "./components/DialogTransaction";
+import { CardTransaction } from "./components/CardTransaction";
+import { TableTransaction } from "./components/TableTransaction";
+import Logged from "./components/Logged";
 
 export default function Home() {
-  const setUser = useAuthStore((state: any) => state.setUser)
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const user_id = searchParams.get("userId")
-
-  async function fetchUser() {
-    try {
-      const user = await fetch(`http://localhost:8081/user/${user_id}`)
-      const userParsed = await user.json();
-
-      console.log("userParsed", userParsed)
-
-      setUser(userParsed)
-      router.push("/dashboard")
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
-  useEffect(() => {
-    if (!user_id) router.push("/login")
-    fetchUser()
-  }, [user_id])
-
   return (
-    <div><h1>Loading...</h1></div>
+    <main className="container">
+      <Logged />
+      <header className="flex justify-between py-12">
+        <h1>My accounts</h1>
+        <div className="flex gap-2">
+          <DialogTransaction />
+          <ModeToggle />
+        </div>
+      </header>
+      <div className="grid md:grid-cols-3 gap-12">
+        <CardTransaction type="payment" title="Payable" value="$1,200.89" aditional="+20.1% from last month" />
+        <CardTransaction type="receive" title="Receivable" value="$45,231.89" aditional="+20.1% from last month" />
+        <CardTransaction type="total" title="Total Revenue" value="$44,031.00" aditional="+20.1% from last month" />
+      </div>
+      <TableTransaction />
+    </main>
   )
-
 }

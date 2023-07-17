@@ -1,5 +1,3 @@
-"use client"
-
 import Link from "next/link";
 import { GoogleIcon } from "~/components/custom/GoogleIcon";
 import { Button } from "~/components/ui/button";
