@@ -1,11 +1,11 @@
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "~/components/ui/form";
 import { useForm, useFormContext } from "react-hook-form"
 import { Input } from "~/components/ui/input";
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, InputHTMLAttributes } from "react";
 import { InputProps } from "~/@types/Input";
 
 
-export function TextInput({ name, label, description, className, ...props }: InputProps & HTMLAttributes<HTMLInputElement>) {
+export function TextInput({ name, label, description, className, ...props }: InputProps & InputHTMLAttributes<HTMLInputElement>) {
     const form = useFormContext();
     return (
         <FormField

@@ -2,12 +2,10 @@ import { ModeToggle } from "~/components/ui/mode-toggle";
 import { DialogTransaction } from "./components/DialogTransaction";
 import { CardTransaction } from "./components/CardTransaction";
 import { TableTransaction } from "./components/TableTransaction";
-import Logged from "./components/Logged";
 
 export default function Home() {
   return (
     <main className="container">
-      <Logged />
       <header className="flex justify-between py-12">
         <h1>My accounts</h1>
         <div className="flex gap-2">

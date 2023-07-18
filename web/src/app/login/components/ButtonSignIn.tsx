@@ -2,7 +2,7 @@ import Link from "next/link";
 import { GoogleIcon } from "~/components/custom/GoogleIcon";
 import { Button } from "~/components/ui/button";
 
-export function ButtonSingIn() {
+export function ButtonSingInWithGoogle() {
 
     return (
         <Link href={"http://localhost:8081/auth/google"}>
