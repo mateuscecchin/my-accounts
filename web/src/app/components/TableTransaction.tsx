@@ -1,22 +1,41 @@
-'use client'
-
+import { cookies } from "next/headers";
+import { parseCookies } from "nookies";
 import { useEffect, useState } from "react";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "~/components/ui/table";
 import { useAuthStore } from "~/store/auth";
 
-export function TableTransaction() {
-    const user_id = useAuthStore((state: any) => state.user.id)
-    const [tableData, setTableData] = useState<IAccounts[]>([]);
+export async function TableTransaction() {
+    // const user_id = useAuthStore((state: any) => state.user.id)
+    // const [tableData, setTableData] = useState<IAccounts[]>([]);
+    // const { token } = parseCookies();
 
-    async function fetchAccounts() {
-        const data = await fetch(`http://localhost:8081/accounts/${user_id}`, { cache: "no-cache" });
-        const dataParsed = await data.json() as IAccounts[];
-        setTableData(dataParsed)
-    }
+    // async function fetchAccounts() {
+    //     const data = await fetch(`http://localhost:8081/accounts/${user_id}`, {
+    //         cache: "no-cache", headers: {
+    //             "Authorization": `Bearer ${token}`
+    //         }
+    //     });
+    //     const dataParsed = await data.json() as IAccounts[];
+    //     setTableData(dataParsed)
+    // }
 
-    useEffect(() => {
-        fetchAccounts()
-    }, [])
+    // useEffect(() => {
+    //     fetchAccounts()
+    // }, [])
+
+    const user_id = useAuthStore.getState().user.id
+
+    const token = cookies().get("token")?.value
+
+    console.log("token", token)
+
+    const data = await fetch(`http://localhost:8081/accounts/${user_id}`, {
+        cache: "no-cache", headers: {
+            "Authorization": `Bearer ${token}`
+        }
+    });
+    const dataParsed = await data.json() as IAccounts[];
+
 
     return (
         <Table className="my-12">
@@ -31,7 +50,7 @@ export function TableTransaction() {
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {tableData.map((invoice) => (
+                {dataParsed.map((invoice) => (
                     <TableRow key={invoice.id}>
                         <TableCell className="font-medium">{invoice.description}</TableCell>
                         <TableCell>{invoice.category}</TableCell>

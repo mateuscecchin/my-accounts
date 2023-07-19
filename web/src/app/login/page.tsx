@@ -10,8 +10,8 @@ import { TextInput } from "~/components/custom/Form/TextInput";
 import { Button } from "~/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Separator } from "~/components/ui/separator";
-import { logIn } from "~/services/AuthApi";
 import { useAuthStore } from "~/store/auth";
+import { logIn } from "~/utils/logIn";
 
 const schemeValidation = z.object({
   email: z.string().email(),
@@ -31,7 +31,6 @@ export default function LogIn() {
     try {
       const user = await logIn(data)
       setUser(user)
-
       router.push("/")
     } catch (err) {
       console.log(err)

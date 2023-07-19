@@ -11,6 +11,8 @@ import { DatePickerInput } from "~/components/custom/Form/DatePickerInput";
 import { RadioInput, RadioInputItem } from "~/components/custom/Form/RadioInput";
 import { ArrowDown, ArrowUp } from "lucide-react"
 import { useAuthStore } from "~/store/auth";
+import { useRouter } from "next/navigation";
+import { parseCookies } from "nookies";
 
 const schemeValidation = z.object({
   description: z.string().min(1),
@@ -22,7 +24,9 @@ const schemeValidation = z.object({
 type Invoice = z.infer<typeof schemeValidation>
 
 export function DialogTransaction() {
+  const router = useRouter();
   const user_id = useAuthStore(((state: any) => state.user.id))
+  const { token } = parseCookies()
   const form = useForm<Invoice>({
     resolver: zodResolver(schemeValidation)
   })
@@ -33,10 +37,12 @@ export function DialogTransaction() {
       const res = await fetch('http://localhost:8081/accounts/create', {
         method: "post",
         headers: {
+          "Authorization": `Bearer ${token}`,
           "Content-type": "application/json",
         },
         body: JSON.stringify({ ...data, user_id, category: "", price })
       })
+      router.refresh()
     } catch (err) {
       console.log(err)
     }
@@ -71,7 +77,9 @@ export function DialogTransaction() {
             </div>
           </RadioInput>
           <DialogFooter>
-            <Button>Create</Button>
+            <DialogTrigger asChild>
+              <Button type="submit">Create</Button>
+            </DialogTrigger>
           </DialogFooter>
         </Form>
       </DialogContent>

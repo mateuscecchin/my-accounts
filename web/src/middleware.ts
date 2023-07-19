@@ -5,7 +5,7 @@ const WHITE_LIST = ["/"];
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  const token = request.cookies.get("token");
+  const token = request.cookies.get("token")?.value;
 
   const isPrivateRoute = WHITE_LIST.includes(pathname);
 
