@@ -29,11 +29,11 @@ export async function TableTransaction() {
 
     console.log("token", token)
 
-    const data = await fetch(`http://localhost:8081/accounts/${user_id}`, {
+    const data = await fetch(`http://localhost:8081/transactions/${user_id}`, {
         cache: "no-cache", headers: {
             "Authorization": `Bearer ${token}`
         }
-    });
+    }); 
     const dataParsed = await data.json() as IAccounts[];
 
 

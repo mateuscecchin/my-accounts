@@ -7,7 +7,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = "file:./dev.db"
 }
 
 model User {
@@ -18,12 +18,12 @@ model User {
 
   created_at DateTime @default(now())
 
-  account Account[]
+  transactions Transaction[]
 
   @@map("users")
 }
 
-model Account {
+model Transaction {
   id          String   @unique @default(uuid())
   description String
   type        String
@@ -37,5 +37,5 @@ model Account {
 
   user User @relation(fields: [user_id], references: [id])
 
-  @@map("accounts")
+  @@map("transactions")
 }

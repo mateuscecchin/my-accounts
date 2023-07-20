@@ -34,7 +34,7 @@ export function DialogTransaction() {
   async function handleSubmit(data: Invoice) {
     const price = Number(data.price)
     try {
-      const res = await fetch('http://localhost:8081/accounts/create', {
+      const res = await fetch('http://localhost:8081/transactions/create', {
         method: "post",
         headers: {
           "Authorization": `Bearer ${token}`,
