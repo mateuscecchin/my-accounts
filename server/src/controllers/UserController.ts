@@ -3,15 +3,17 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { User } from "../models/User";
 
-const PRIVATE_KEY = "1010FFF";
+const PRIVATE_KEY = process.env.PRIVATE_KEY ?? "";
+
+const user = new User();
 
 export class UserController {
-  static async create(req: Request, res: Response) {
+  async create(req: Request, res: Response) {
     try {
       const { email, password, username } = req.body;
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      await User.create({
+      await user.create({
         email,
         password: hashedPassword,
         username,
@@ -19,24 +21,26 @@ export class UserController {
 
       res.status(200).send({ message: "User created!" });
     } catch (error) {
-      res.status(500).send({ error: "An error occurred while creating the user." });
+      res
+        .status(500)
+        .send({ error: "An error occurred while creating the user." });
     }
   }
 
-  static async login(req: Request, res: Response) {
+  async login(req: Request, res: Response) {
     try {
       const { email, password } = req.body;
-      const user = await User.findByEmail(email);
+      const userFinded = await user.findByEmail(email);
 
-      if (!user) {
+      if (!userFinded) {
         return res.status(401).send({ message: "User not found" });
       }
 
-      const passwordMatch = await bcrypt.compare(password, user.password);
+      const passwordMatch = await bcrypt.compare(password, userFinded.password);
 
       if (passwordMatch) {
         const token = jwt.sign(
-          { username: user.username, id: user.id },
+          { username: userFinded.username, id: userFinded.id },
           PRIVATE_KEY
         );
         return res.json({ token });
@@ -46,25 +50,26 @@ export class UserController {
     } catch (error) {
       res.status(500).send({ error: "An error occurred while logging in." });
     }
-    
   }
 
-  static async getUserData(req: Request, res: Response) {
+  async getUserData(req: any, res: Response) {
     try {
-      const userId = req.params.id;
-      const user = await User.findById(userId);
+      const { id } = req.user;
+      const userFinded = await user.findById(id);
 
-      if (!user) {
+      if (!userFinded) {
         return res.status(404).send({ message: "User not found" });
       }
 
       res.send({
-        email: user.email,
-        username: user.username,
-        id: user.id,
+        email: userFinded.email,
+        username: userFinded.username,
+        id: userFinded.id,
       });
     } catch (error) {
-      res.status(500).send({ error: "An error occurred while fetching user data." });
+      res
+        .status(500)
+        .send({ error: "An error occurred while fetching user data." });
     }
   }
 }

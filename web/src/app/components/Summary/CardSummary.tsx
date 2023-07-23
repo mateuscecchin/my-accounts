@@ -16,7 +16,7 @@ const ICON = {
   total: <DollarSign className="text-black dark:text-white" />
 }
 
-export function CardTransaction({ title, value, aditional, type }: Props) {
+export function CardSummary({ title, value, aditional, type }: Props) {
   const Icon = () => ICON[type]
 
   return (

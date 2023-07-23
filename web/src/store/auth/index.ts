@@ -20,7 +20,7 @@ interface State {
 
 type AuthData = Actions & State;
 
-export const useAuthStore = create<any>(
+export const useAuthStore = create(
   persist(
     (set) => ({
       user: {} as User,

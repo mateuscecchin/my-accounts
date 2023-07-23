@@ -12,6 +12,7 @@ import { createUser, fetchUser } from "~/services/AuthApi";
 import { logIn } from "~/utils/logIn";
 import { useAuthStore } from "~/store/auth";
 import { setCookie } from 'nookies'
+import { toast } from "~/components/ui/use-toast";
 
 const schemeValidation = z.object({
   email: z.string().email(),
@@ -32,6 +33,10 @@ export default function SigIn() {
       const user = await logIn({ email: data.email, password: data.password })
       setUser(user)
       router.push("/")
+
+      toast({
+        title: "Account created !"
+      })
     } catch (err) {
       console.log(err)
     }

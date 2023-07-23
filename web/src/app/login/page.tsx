@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -15,25 +15,25 @@ import { logIn } from "~/utils/logIn";
 
 const schemeValidation = z.object({
   email: z.string().email(),
-  password: z.string()
-})
+  password: z.string(),
+});
 
-type LoginData = z.infer<typeof schemeValidation>
+type LoginData = z.infer<typeof schemeValidation>;
 
 export default function LogIn() {
-  const setUser = useAuthStore((state: any) => state.setUser)
+  const setUser = useAuthStore((state: any) => state.setUser);
   const router = useRouter();
   const form = useForm<LoginData>({
-    resolver: zodResolver(schemeValidation)
+    resolver: zodResolver(schemeValidation),
   });
 
   async function handleSubmit(data: LoginData) {
     try {
-      const user = await logIn(data)
-      setUser(user)
-      router.push("/")
+      const user = await logIn(data);
+      setUser(user);
+      router.push("/");
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   }
 
@@ -42,12 +42,14 @@ export default function LogIn() {
       <div className="flex h-full justify-center items-center">
         <Card className="flex w-96 flex-col">
           <CardHeader>
-            <CardTitle className="text-center text-4xl">
-              Log in
-            </CardTitle>
+            <CardTitle className="text-center text-4xl">Log in</CardTitle>
           </CardHeader>
           <CardContent>
-            <Form {...form} onSubmit={handleSubmit} className="flex flex-col gap-2">
+            <Form
+              {...form}
+              onSubmit={handleSubmit}
+              className="flex flex-col gap-2"
+            >
               <TextInput type="email" name="email" label="Email" />
               <TextInput type="password" name="password" label="Password" />
               <Button className="mt-4">Log in</Button>
@@ -57,7 +59,9 @@ export default function LogIn() {
                 <Separator className="flex flex-1" />
               </div>
               <Link href="/singin" className="flex justify-center">
-                <Button type="button" variant="link">Create account</Button>
+                <Button type="button" variant="link">
+                  Create account
+                </Button>
               </Link>
               {/* <ButtonSingInWithGoogle /> talvez algum dia */}
             </Form>
@@ -65,5 +69,5 @@ export default function LogIn() {
         </Card>
       </div>
     </main>
-  )
+  );
 }

@@ -3,15 +3,20 @@ import { UserController } from "../controllers/UserController";
 import { authenticateToken } from "../middlewares/authentication";
 import { TransactionController } from "../controllers/TransactionController";
 
+const transaction = new TransactionController();
+const user = new UserController();
+
 const router = Router();
 
-router.post("/create-account", UserController.create);
-router.post("/login", UserController.login);
+router.post("/user", user.create);
+router.post("/login", user.login);
 
 router.use(authenticateToken);
 
-router.get("/user/:id", UserController.getUserData);
-router.get("/transactions/:user_id", TransactionController.getTransactions);
-router.post("/transactions", TransactionController.createTransaction);
+router.get("/user", user.getUserData);
+router.get("/transactions", transaction.getTransactions);
+router.post("/transactions", transaction.createTransaction);
+router.delete("/transactions/:id", transaction.deleteTransaction);
+router.get("/transactions/summary", transaction.getTransactionsSummary);
 
 export default router;

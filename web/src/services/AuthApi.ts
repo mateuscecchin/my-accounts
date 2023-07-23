@@ -12,7 +12,7 @@ export type SinginData = {
 };
 
 export async function createUser(user: SinginData) {
-	const res = await fetch("http://localhost:8081/create-account", {
+	const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/user`, {
 		method: "post",
 		headers: {
 			"Content-type": "application/json",
@@ -28,7 +28,7 @@ export type LogInData = {
 };
 
 export async function logIn(data: LogInData) {
-	const token = await fetch("http://localhost:8081/login", {
+	const token = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/login`, {
 		method: "post",
 		headers: {
 			"Content-type": "application/json",
@@ -36,14 +36,14 @@ export async function logIn(data: LogInData) {
 		body: JSON.stringify({ email: data.email, password: data.password }),
 	});
 
-	const tokenSerialized = await token.json();
+	const tokenParsed = await token.json();
 
-	return tokenSerialized.token;
+	return tokenParsed.token;
 }
 
-export async function fetchUser(userId: number) {
+export async function fetchUser() {
 	const { token } = parseCookies();
-	const user = await fetch(`http://localhost:8081/user/${userId}`, {
+	const user = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/user`, {
 		headers: {
 			Authorization: `Bearer ${token}`,
 		},
