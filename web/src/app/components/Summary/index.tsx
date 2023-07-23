@@ -23,13 +23,13 @@ export async function Summary() {
       <CardSummary
         type="payment"
         title="Payable"
-        value={formatCurrency(summary.payment)}
+        value={formatCurrency(summary.paid)}
         // aditional="+20.1% from last month"
       />
       <CardSummary
         type="receive"
         title="Receivable"
-        value={formatCurrency(summary.receiment)}
+        value={formatCurrency(summary.received)}
         // aditional="+20.1% from last month"
       />
       <CardSummary

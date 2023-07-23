@@ -1,5 +1,6 @@
 import { Response } from "express";
 import { Transaction } from "../models/Transaction";
+import { Type } from "@prisma/client";
 
 const transaction = new Transaction();
 
@@ -34,15 +35,15 @@ export class TransactionController {
       const { id } = req.user;
       const transactions = await transaction.getByUserId(id);
 
-      const payment = transactions
-        .filter((transaction) => transaction.type == "payment")
+      const paid = transactions
+        .filter((transaction) => transaction.type == Type.PAID)
         .reduce((accumulator, current) => current.amount + accumulator, 0);
-      const receiment = transactions
-        .filter((transaction) => transaction.type == "receiment")
+      const received = transactions
+        .filter((transaction) => transaction.type == Type.RECEIVED)
         .reduce((accumulator, current) => current.amount + accumulator, 0);
 
-      const total = receiment - payment;
-      const data = { total, payment, receiment };
+      const total = received - paid;
+      const data = { total, paid, received };
       res.send(data);
     } catch (err) {
       res

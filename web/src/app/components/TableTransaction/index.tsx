@@ -48,7 +48,7 @@ export async function TableTransaction() {
             <TableCell className="font-medium">
               {transaction.description}
             </TableCell>
-            <TableCell>{transaction.category}</TableCell>
+            <TableCell>{transaction.category?.description || ""}</TableCell>
             <TableCell className="capitalize">{transaction.type}</TableCell>
             <TableCell className={amount({ type: transaction.type as any })}>
               {formatCurrency(transaction.amount)}
@@ -69,8 +69,8 @@ export async function TableTransaction() {
 const amount = cva("text-right", {
   variants: {
     type: {
-      payment: "text-red-500 before:content-['-']",
-      receiment: "text-green-500",
+      PAID: "text-red-500 before:content-['-']",
+      RECEIVED: "text-green-500",
     },
   },
 });

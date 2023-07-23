@@ -21,6 +21,7 @@ export class UserController {
 
       res.status(200).send({ message: "User created!" });
     } catch (error) {
+      console.log("error", error)
       res
         .status(500)
         .send({ error: "An error occurred while creating the user." });
@@ -40,7 +41,7 @@ export class UserController {
 
       if (passwordMatch) {
         const token = jwt.sign(
-          { username: userFinded.username, id: userFinded.id },
+          userFinded,
           PRIVATE_KEY
         );
         return res.json({ token });
