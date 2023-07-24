@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { AlertDeleteTransaction } from "./AlertDeleteTransaction";
+import { AlertDeleteTransaction } from "../AlertDeleteTransaction";
 
 export function ActionTrasaction({idTransaction}: {idTransaction: string}) {
   return (

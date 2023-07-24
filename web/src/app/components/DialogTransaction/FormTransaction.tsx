@@ -30,16 +30,16 @@ const schemeValidation = z.object({
   type: z.string(),
 });
 
-type Invoice = z.infer<typeof schemeValidation>;
+export type Transaction = z.infer<typeof schemeValidation>;
 
 export function FormTransaction() {
   const router = useRouter();
   const { token } = parseCookies();
-  const form = useForm<Invoice>({
+  const form = useForm<Transaction>({
     resolver: zodResolver(schemeValidation),
   });
 
-  async function handleSubmit(data: Invoice) {
+  async function handleSubmit(data: Transaction) {
     const amount = Number(data.amount);
     try {
       await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/transactions`, {
