@@ -17,3 +17,4 @@
 - Express
 - Prisma
 - JWT
+- Vercel Postgres
