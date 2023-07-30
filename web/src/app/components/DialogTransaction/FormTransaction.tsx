@@ -27,7 +27,7 @@ const schemeValidation = z.object({
   description: z.string().min(1),
   amount: z.string().min(1),
   date: z.date(),
-  type: z.string(),
+  type: z.enum(["PAID", "RECEIVED"]),
 });
 
 export type Transaction = z.infer<typeof schemeValidation>;
@@ -78,11 +78,11 @@ export function FormTransaction() {
         <div className="grid grid-cols-2 gap-4">
           <RadioInputItem value="PAID">
             <ArrowDown className="text-red-500" />
-            <p>Payment</p>
+            <p>Paid</p>
           </RadioInputItem>
           <RadioInputItem value="RECEIVED">
             <ArrowUp className="text-green-500" />
-            <p>Receiment</p>
+            <p>Received</p>
           </RadioInputItem>
         </div>
       </RadioInput>

@@ -1,17 +1,17 @@
-interface ITransaction {
-  id: string;
-  description: string;
-  type: string;
-  category: ICategory;
-  date: Date;
-  amount: number;
-  user_id: string;
-  created_at: string;
-  updated_at: string;
-}
+import { cookies } from "next/headers";
+import { parseCookies } from "nookies";
+import { Transaction } from "~/app/components/DialogTransaction/FormTransaction";
 
-interface ICategory {
-  id: string;
-  name: string;
-  description: string;
+export async function fetchTransactions() {
+  const token = cookies().get("token")?.value;
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/transactions`,
+    {
+      cache: "no-cache",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return (await response.json()) as Transaction[];
 }

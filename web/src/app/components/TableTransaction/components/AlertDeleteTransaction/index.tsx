@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { Trash2Icon } from "lucide-react";
 import { cookies } from "next/headers";
@@ -19,8 +19,8 @@ import { Button } from "~/components/ui/button";
 import { toast } from "~/components/ui/use-toast";
 
 async function deleteTransaction(idTransaction: string) {
-  const {token} = parseCookies()
-   await fetch(
+  const { token } = parseCookies();
+  await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/transactions/${idTransaction}`,
     {
       method: "delete",
@@ -31,21 +31,29 @@ async function deleteTransaction(idTransaction: string) {
   );
 }
 
-export function AlertDeleteTransaction({idTransaction}: {idTransaction: string}) {
+export function AlertDeleteTransaction({
+  idTransaction,
+}: {
+  idTransaction: string;
+}) {
   const router = useRouter();
 
   async function handleDelete() {
-    await deleteTransaction(idTransaction)
+    await deleteTransaction(idTransaction);
     toast({
-      title: "Transaction deleted !"
-    })
+      title: "Transaction deleted !",
+    });
     router.refresh();
   }
 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="ghost" size="sm" className="text-red-500 flex w-full justify-between">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="text-red-500 flex w-full justify-between"
+        >
           Remove
           <Trash2Icon width={16} />
         </Button>
@@ -61,9 +69,7 @@ export function AlertDeleteTransaction({idTransaction}: {idTransaction: string})
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           <AlertDialogAction asChild>
-            <Button onClick={handleDelete}>
-            Continue
-            </Button>
+            <Button onClick={handleDelete}>Continue</Button>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -2,7 +2,6 @@ import { Button } from "~/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
 import { FormTransaction } from "./FormTransaction";
 
-
 export function DialogTransaction() {
   return (
     <Dialog>
@@ -10,8 +9,8 @@ export function DialogTransaction() {
         <Button variant="secondary">New transaction</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-">
-        <FormTransaction/>
+        <FormTransaction />
       </DialogContent>
     </Dialog>
-  )
+  );
 }

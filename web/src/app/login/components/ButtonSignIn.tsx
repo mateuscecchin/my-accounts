@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { GoogleIcon } from "~/components/custom/GoogleIcon";
 import { Button } from "~/components/ui/button";
+import { GoogleIcon } from "./GoogleIcon";
 
 export function ButtonSingInWithGoogle() {
   return (

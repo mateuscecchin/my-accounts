@@ -1,16 +1,15 @@
-import { EditIcon, MoreHorizontal, Trash2Icon } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { AlertDeleteTransaction } from "../AlertDeleteTransaction";
 
-export function ActionTrasaction({idTransaction}: {idTransaction: string}) {
+export function ActionTrasaction({ idTransaction }: { idTransaction: string }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -19,13 +18,11 @@ export function ActionTrasaction({idTransaction}: {idTransaction: string}) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel className="text-center">Transaction</DropdownMenuLabel>
+        <DropdownMenuLabel className="text-center">
+          Transaction
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <AlertDeleteTransaction idTransaction={idTransaction}/>
-        {/* <DropdownMenuItem className="flex justify-between">
-          Edit
-          <EditIcon width={16} />
-        </DropdownMenuItem> */}
+        <AlertDeleteTransaction idTransaction={idTransaction} />
       </DropdownMenuContent>
     </DropdownMenu>
   );
